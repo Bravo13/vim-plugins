@@ -2053,6 +2053,11 @@ function! s:Perl_RereadTemplates ( displaymsg )
 		"-------------------------------------------------------------------------------
 		" LOCAL INSTALLATION
 		"-------------------------------------------------------------------------------
+		if (s:Perl_GlobalTemplateFile != s:Perl_LocalTemplateFile) && filereadable( s:Perl_GlobalTemplateFile )
+			call mmtemplates#core#ReadTemplates ( g:Perl_Templates, 'load', s:Perl_GlobalTemplateFile )
+		else
+			echomsg "Global template file '".s:Perl_GlobalTemplateFile."' not readable."
+		endif
 		if filereadable( s:Perl_LocalTemplateFile )
 			call mmtemplates#core#ReadTemplates ( g:Perl_Templates, 'load', s:Perl_LocalTemplateFile )
 			let	messsage	= "Templates read from '".s:Perl_LocalTemplateFile."'"
